@@ -1,0 +1,46 @@
+#!/usr/bin/perl 
+
+$numarg = $#ARGV;
+
+if($numarg != 2) {
+  print "Usage: $0 <REDCAT file> <A file> <b file>\n";
+  exit(0);
+}
+
+open (Infile, "<$ARGV[0]") or die "Can't open file $name\n";
+open (Afile, ">$ARGV[1]") or die "Can't open file $name\n";
+open (bfile, ">$ARGV[2]") or die "Can't open file $name\n";
+
+while (<Infile>)
+  {
+    chomp($_);
+    $line = $_;
+    @listline = split (" ", $line);
+
+    $x = $listline[3] - $listline[0];
+    $y = $listline[4] - $listline[1];
+    $z = $listline[5] - $listline[2];
+    $r = sqrt($x*$x+$y*$y+$z*$z);
+    $d = $listline[6];
+    $max = $listline[7];
+    $e = $listline[8];
+
+    if ($r != 0){
+       $x /= $r;
+       $y /= $r;
+       $z /= $r;
+       $r = $r*$r*$r;
+    }
+    $xy = 2*$x*$y*$max/$r;
+    $xz = 2*$x*$z*$max/$r;
+    $yy = ($y*$y-$x*$x)*$max/$r;
+    $yz = 2*$y*$z*$max/$r;
+    $zz = ($z*$z-$x*$x)*$max/$r;
+
+    print Afile "$xy $xz $yy $yz $zz\n";
+    print bfile "$d $e\n";
+}
+
+close(Infile);
+close(Afile);
+close(bfile);

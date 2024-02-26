@@ -1,0 +1,69 @@
+Summary
+
+REDCAT is a software package for the analysis of residual dipolar couplings (RDCs) for structure validation and elucidation. In addition to basic utilities to solve for order tensors and back-calculate couplings from a given order tensor and proposed structure, a number of improved algorithms have been incorporated. These include the proper sampling of the Null-space (when the system of linear equations is under-determined), more sophisticated filters for invalid order-tensor identification, error analysis for the identification of the problematic measurements, and simulation of the effects of dynamic averaging processes. REDCAT is a user-friendly program with excellent performance. The modular implementation of REDCAT's algorithms, with separation of the computational engine from the graphical engine, allows for flexible and easy command line interaction.
+
+Initial Publication:
+Valafar, Homayoun, and James H. Prestegard. "REDCAT: a residual dipolar coupling analysis tool." Journal of Magnetic Resonance 167.2 (2004): 228-41.
+
+
+About
+
+Recent availability of residual dipolar couplings (RDC) data has highlighted the need for general and user friendly RDC analysis tools. REDCAT (REsidual Dipolar Coupling Analysis Tool) has been designed and distributed as a general tool for analysis of RDC data. REDCAT is a user-friendly program with its graphical-user-interface developed in Tcl/Tk and is therefore highly portable. The computational engine behind this GUI is written in C/C++ providing excellent computational performance. Separation of the computational engine from the graphical engine allows for flexible and easy command line interaction that can used for automated data analysis sessions.
+
+Conventional use of REDCAT requires existence of molecular structure and assigned RDC data. In the presence of structure and assigned data, REDCAT can be used to scrutenize the validity of a structure, study internal motion, orient rigid domains with respect to each other and emulate RDC data under static and dynamic conditions.
+
+In order to obtain order tensors and back calculate couplings from a given order tensor and proposed structure, a number of improved algorithms have been incorporated. These include more sophisticated filters for invalid order-tensor identification, error analysis for the identification of the problematic measurements, and simulation of the effects of dynamic averaging process.
+--------------------------------------------------------------------------------
+
+Features
+
+The following lists some of the features of REDCAT:
+
+    Easy manipulation of the data during an analysis session via the GUI implementation
+    Easy extraction of principal order parameters and the Euler angles that allow the transformation of a structure into its principle alignment frame (PAF)
+    More meaningful methods of screening for valid order tensor solutions
+    Back-calculation of RDCs with any given tensor and structure
+    Calculation of the RMSD, S-factor, and Q-factor between back calculated and measured RDCs
+    Report of the best solution tensor (in the least squares sense)
+    Error analysis that allows the identification and isolation of problematic measurements or structural errors
+    2D and 3D plotting of principal order parameters
+    Computation of error values that will produce solutions for the given coordinates and RDC data
+    Dynamic averaging of RDCs due to motion 
+--------------------------------------------------------------------------------
+
+History
+
+REDCAT was developed by Dr. Homayoun Valafar during his post doctoral appointment with Dr. James Prestegard in 2002. The original publication describing REDCAT was published in 2003 in (JMR). REDCAT development and maintenance continues under Dr. Valafar's supervision. 
+--------------------------------------------------------------------------------
+
+Installing REDCAT software
+Dependencies
+
+Your system must have gnuplot and wish installed. More information about gnuplot can be found at http://www.gnuplot.info. Wish comes standard on all newer model Macintosh systems, and can be downloaded from the repository for linux systems.
+Installation
+Linux
+
+To install REDCAT, open a terminal, navigate to the local Redcat directory and type the following commands:
+
+    cmake .
+    make
+    sudo make install
+
+Macintosh
+An error has been noted in the installation procedure for the CDs distributed at ENC. For Mac users, please remove "-static" from line 4 of the makefile located at the top of the Redcat directory. Alternately, replace the makefile with the file downloaded from here.
+
+To install REDCAT, open a terminal, navigate to the local Redcat directory and type the following commands:
+
+    make
+    sudo make install
+--------------------------------------------------------------------------------
+
+Known Bugs
+
+If you find a bug, please contact us
+--------------------------------------------------------------------------------
+
+References
+
+    H. Valafar, Prestegard J.H., REDCAT: A Residual Dipolar Coupling Analysis Tool. Journal of Magnetic Resonance 167 (2004) 228-241
+

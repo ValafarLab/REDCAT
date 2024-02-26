@@ -1,0 +1,63 @@
+#!/usr/bin/perl 
+
+$numarg = $#ARGV;
+
+if($numarg != 3) {
+  print "Usage: $0 <First Atom> <Second Atom> <Max RDC> <chain>\n";
+  exit(0);
+}
+
+$A1 = $ARGV[0];
+$A2 = $ARGV[1];
+$Max = $ARGV[2];
+$chain = $ARGV[3];
+
+$cur_res = -1;   
+while (<stdin>)
+{
+  chomp($_);
+  $line = $_;
+  @listline = split (" ", $line);
+  $res = $listline[5];
+  if($res == $cur_res) {
+    if(($listline[2] eq $A1) && ($listline[4] eq $chain)) 
+    {
+      $Nflag = 1;
+      $Ax = $listline[6];
+      $Ay = $listline[7];
+      $Az = $listline[8];
+    }
+    if(($listline[2] eq $A2) && ($listline[4] eq $chain)) 
+    {
+      $Hflag = 1;
+      $Bx = $listline[6];
+      $By = $listline[7];
+      $Bz = $listline[8];
+    }
+  } else 
+  {
+    $Nflag = $Ax**2 + $Ay**2 + $Az**2;
+    $Hflag = $Bx**2 + $By**2 + $Bz**2;
+    if(($Nflag > 0) && ($Hflag > 0)) {
+       print "$Ax $Ay $Az $Bx $By $Bz -1.0 $Max 0.2 /*from $cur_res*/\n";
+    } else 
+    {
+#      print "No Data Available for residue $cur_res. \n";
+    }
+    $Ax = 0; $Ay = 0; $Az = 0;
+    $Bx = 0; $By = 0; $Bz = 0;
+    $cur_res = $res;
+    if(($listline[2] eq $A1) && ($listline[4] eq $chain)) 
+    {
+      $Ax = $listline[6];
+      $Ay = $listline[7];
+      $Az = $listline[8];
+    }
+    if(($listline[2] eq $A2) && ($listline[4] eq $chain)) 
+    {
+      $Bx = $listline[6];
+      $By = $listline[7];
+      $Bz = $listline[8];
+    }
+  }
+}

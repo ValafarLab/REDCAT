@@ -1,0 +1,102 @@
+#!/usr/bin/perl 
+
+
+sub PrintXplor {
+	($fout, $RDC, $er, $res, $atom1, $atom2, $shift, $axisAtom) = @_;
+	$res2 = $res + $shift;
+#	print  "assign ( resid 500 and name OO )\n";
+#	print  "( resid 500 and name Z )\n";
+#	print  "( resid 500 and name X )\n";
+#	print  "( resid 500 and name Y )\n";
+#	print  "( resid $res and name $atom1 )\n";
+#	print  "( resid $res2 and name $atom2 ) ";
+#	print  "$RDC $er\n";
+
+	print $fout "assign ( resid $axisAtom and name OO )\n";
+	print $fout "( resid $axisAtom and name Z )\n";
+	print $fout "( resid $axisAtom and name X )\n";
+	print $fout "( resid $axisAtom and name Y )\n";
+	print $fout "( resid $res and name $atom1 )\n";
+	print $fout "( resid $res2 and name $atom2 ) ";
+	print $fout "$RDC $er $er\n";
+}
+
+$numarg = $#ARGV;
+
+if($numarg != 3) {
+  print "Usage: $0 <Start> <End> <Axis Resid> <output file>\n";
+  exit(0);
+}
+
+$start = $ARGV[0];
+$end = $ARGV[1];
+$ani = $ARGV[2];
+
+open(foutCN, ">$ARGV[3].CN.tbl"), or die "Error openning CN\n";
+open(foutNH, ">$ARGV[3].NH.tbl"), or die "Error openning NH\n";
+open(foutCH, ">$ARGV[3].CH.tbl"), or die "Error openning CH\n";
+open(foutCAHA, ">$ARGV[3].CAHA.tbl"), or die "Error openning CAHA\n";
+open(foutHAH, ">$ARGV[3].HAH.tbl"), or die "Error openning HAH\n";
+open(foutHaH, ">$ARGV[3].Ha-1H.tbl"), or die "Error openning HaH\n";
+
+if(($end-$start) < 1) {
+	print "Need to have at least two peptide planes.\n";
+	exit(0);
+}
+
+for($i = 1; $i < $start; $i++) {
+#   $AAtype = <stdin>;
+   $CN = <stdin>;
+   $NH = <stdin>;
+   $CH = <stdin>;
+   $CAHA = <stdin>;
+   $HAH = <stdin>;
+   $HaH = <stdin>;
+}
+
+for($i = $start ; $i <= $end; $i++) {
+#   $AAtype = <stdin>;
+   $CN = <stdin>;
+   $NH = <stdin>;
+   $CH = <stdin>;
+   $CAHA = <stdin>;
+   $HAH = <stdin>;
+   $HaH = <stdin>;
+
+   chomp($CN); @list = split(" ", $CN);
+   if($list[0] != 999) { 
+      PrintXplor(foutCN, $list[0], $list[1], $i, "N", "C", "-1", $ani);
+   }
+
+   chomp($NH); @list = split(" ", $NH);
+   if($list[0] != 999) { 
+      PrintXplor(foutNH, $list[0], $list[1], $i, "N", "HN", "0", $ani);
+   }
+
+   chomp($CH); @list = split(" ", $CH);
+   if($list[0] != 999) { 
+      PrintXplor(foutCH, $list[0], $list[1], $i, "HN", "C", "-1", $ani);
+   }
+
+   chomp($CAHA); @list = split(" ", $CAHA);
+   if($list[0] != 999) { 
+      PrintXplor(foutCAHA, $list[0], $list[1], $i, "CA", "HA", "0", $ani);
+   }
+
+   chomp($HAH); @list = split(" ", $HAH);
+   if($list[0] != 999) { 
+      PrintXplor(foutHAH, $list[0], $list[1], $i, "HA", "HN", "0", $ani);
+   }
+
+   chomp($HaH); @list = split(" ", $HaH);
+   if($list[0] != 999) { 
+      PrintXplor(foutHaH, $list[0], $list[1], $i, "HN", "HA", "-1", $ani);
+   }
+
+}
+close(foutCN);
+close(foutNH);
+close(foutCH);
+close(foutCAHA);
+close(foutHAH);
+close(foutHaH);

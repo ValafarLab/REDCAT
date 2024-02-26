@@ -1,0 +1,6 @@
+res,resNum,Type rdc
+
+Name data
+A1N-H 999
+B2N-H 10
+B7N-H 11

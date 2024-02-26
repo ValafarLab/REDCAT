@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+$numarg = $#ARGV;
+
+if($numarg < 1) {
+	print "This script takes in a .pdb file and creates a new .pdb file translated to be more compatable with xplor: USAGE: ./xreader file.pdb newfile.pdb";
+	exit;
+
+}#end if
+
+open(INPUT, "<".$ARGV[0]);
+open(OUTPUT, ">".$ARGV[1]);
+
+while(<INPUT>){
+	chomp;
+	$line= substr $_, 0, 66;
+	#print $line."\n";
+	if($line =~ /^(TER)/){
+		print OUTPUT "END"."\n";
+		last;
+		
+	}#end if	
+	if($line =~ /^(END)/){
+		print OUTPUT $line."\n";
+		last;
+
+	}#end if
+	if($line !~  /^(ATOM)/){
+		next;
+
+	}#end if
+	#replace wrong aminos
+	@replaceFrom= ("NALA", "\\+");
+	@replaceWith= ("ALA", " ");
+	
+	for ($x=0;$x<$#replaceFrom+1;$x+=1){
+		$line =~ s/$replaceFrom[$x]/$replaceWith[$x]/;
+
+	}#end for
+	
+	print OUTPUT $line."\n";
+
+}#end while
+

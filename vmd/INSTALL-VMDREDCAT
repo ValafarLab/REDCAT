@@ -1,0 +1,16 @@
+1.) download Redcat source folder and place within computer's file system
+2.) from the Redcat directory run the following commands: 
+	a.) make
+	b.) sudo make install
+3.) Install VMD or make sure VMD is installed
+4.) add the following lines to bottom of .vmdrc file (located in the vmd lib directory)
+	
+	lappend auto_path "<directory to Redcat installation>/Redcat/vmd"
+	vmd_install_extension redcat redcat_tk_cb "RDC/Redcat"
+
+NOTE: 
+	- For Mac this is located Inside the VMD directory under Contents
+	- For Linux this is under /usr/local/lib/vmd for the default installation of vmd
+
+5.) run vmd
+6.) Redcat will be the first entry on the menu bar under Extensions -> RDC
